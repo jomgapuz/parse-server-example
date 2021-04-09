@@ -13,7 +13,8 @@ if (!databaseUri) {
   console.log('DATABASE_URI not specified, falling back to localhost.');
 }
 const config = {
-  databaseURI: databaseUri || 'mongodb://localhost:27017/dev',
+  // https://docs.mongodb.com/manual/reference/connection-string/
+  databaseURI: databaseUri || 'mongodb://root:example@localhost:27017/parse?authSource=admin',
   cloud: process.env.CLOUD_CODE_MAIN || __dirname + '/cloud/main.js',
   appId: process.env.APP_ID || 'myAppId',
   masterKey: process.env.MASTER_KEY || '', //Add your master key here. Keep it secret!
@@ -53,7 +54,7 @@ const port = process.env.PORT || 1337;
 if (!test) {
   const httpServer = require('http').createServer(app);
   httpServer.listen(port, function () {
-    console.log('parse-server-example running on port ' + port + '.');
+    console.log('parse-server-example running on http://localhost:' + port);
   });
   // This will enable the Live Query real-time server
   ParseServer.createLiveQueryServer(httpServer);
